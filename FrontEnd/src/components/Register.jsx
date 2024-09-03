@@ -20,20 +20,18 @@ function Register() {
     password,
     userName,
   } = Validation();
-  const [role, setRole] = useState("");
+  const [role, setRole] = useState("Manager");
   const registerApi = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:3000/login",
-        { email, password ,userName,role},
-        {
-          withCredentials: true,
-        }
+        "http://localhost:3000/register",
+        { email, password, userName, role },
+        { withCredentials: true }
       );
-      console.log("loginapi:", response);
-      // if (response.status === 200) {
-      //   navigate("/manager");
-      // }
+      console.log("registerApi:", response);
+      if (response.status === 200) {
+        navigate("/");
+      }
     } catch (error) {
       console.log(error);
     }
