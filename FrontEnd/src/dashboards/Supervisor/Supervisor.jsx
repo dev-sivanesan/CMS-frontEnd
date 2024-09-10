@@ -1,6 +1,12 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Supervisor() {
+  const navigate = useNavigate();
+
+  const handleUpdate = () => {
+    navigate("/updateData");
+  };
+
   const arr = [
     {
       name: "Raj",
@@ -27,47 +33,48 @@ function Supervisor() {
       location: "Trichy",
     },
   ];
+
   return (
-    <div className="flex flex-col  bg-slate-500 overflow-auto shadow-2xl p-2  ">
+    <div className="flex flex-col bg-slate-500 overflow-auto shadow-2xl p-2">
       <div className="sm:-mx-6 lg:-mx-8">
         <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
           <div className="overflow-x-auto">
-            <table className="min-w-full  text-left ">
-              <thead className="border-b  border-black ">
+            <table className="min-w-full text-left">
+              <thead className="border-b border-black">
                 <tr className="bg-gray-200">
-                  <th className="px-4 py-2 ">Name</th>
-                  <th className="px-4 py-2 ">Age</th>
-                  <th className="px-4 py-2 ">Date of Birth</th>
-                  <th className="px-4 py-2 ">Gender</th>
-                  <th className="px-4 py-2 ">Father Name</th>
-                  <th className="px-4 py-2 ">Mother Name</th>
-                  <th className="px-4 py-2 ">Mobile</th>
-                  <th className="px-4 py-2 ">Address</th>
-                  <th className="px-4 py-2 ">Email</th>
-                  <th className="px-4 py-2 ">Location</th>
-                  <th className="px-4 py-2 ">Action</th>
+                  <th className="px-4 py-2">Name</th>
+                  <th className="px-4 py-2">Age</th>
+                  <th className="px-4 py-2">Date of Birth</th>
+                  <th className="px-4 py-2">Gender</th>
+                  <th className="px-4 py-2">Father Name</th>
+                  <th className="px-4 py-2">Mother Name</th>
+                  <th className="px-4 py-2">Mobile</th>
+                  <th className="px-4 py-2">Address</th>
+                  <th className="px-4 py-2">Email</th>
+                  <th className="px-4 py-2">Location</th>
+                  <th className="px-4 py-2">Action</th>
                 </tr>
               </thead>
               <tbody>
                 {arr.map((li, i) => (
-                  <tr key={i} className="border-b  border-black">
-                    <td className="px-4 py-2 ">{li.name}</td>
-                    <td className="px-4 py-2 ">{li.age}</td>
-                    <td className="px-4 py-2 ">{li.dob}</td>
-                    <td className="px-4 py-2 ">{li.gender}</td>
-                    <td className="px-4 py-2 ">{li.fatherName}</td>
-                    <td className="px-4 py-2 ">{li.motherName}</td>
-                    <td className="px-4 py-2 ">{li.mobile}</td>
-                    <td className="px-4 py-2 ">{li.address}</td>
-                    <td className="px-4 py-2 ">{li.email}</td>
-                    <td className="px-4 py-2 ">{li.location}</td>
-                    <td className="px-4 py-2 ">
-                      <Link
+                  <tr key={i} className="border-b border-black">
+                    <td className="px-4 py-2">{li.name}</td>
+                    <td className="px-4 py-2">{li.age}</td>
+                    <td className="px-4 py-2">{li.dob}</td>
+                    <td className="px-4 py-2">{li.gender}</td>
+                    <td className="px-4 py-2">{li.fatherName}</td>
+                    <td className="px-4 py-2">{li.motherName}</td>
+                    <td className="px-4 py-2">{li.mobile}</td>
+                    <td className="px-4 py-2">{li.address}</td>
+                    <td className="px-4 py-2">{li.email}</td>
+                    <td className="px-4 py-2">{li.location}</td>
+                    <td className="px-4 py-2">
+                      <button
+                        onClick={handleUpdate}
                         className="bg-red-700 rounded-md p-2 font-medium"
-                        to="/updateData"
                       >
                         Update
-                      </Link>
+                      </button>
                     </td>
                   </tr>
                 ))}
@@ -79,4 +86,5 @@ function Supervisor() {
     </div>
   );
 }
+
 export default Supervisor;
