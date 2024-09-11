@@ -5,6 +5,7 @@ import Manager from "./dashboards/Manager";
 import Supervisor from "./dashboards/Supervisor/Supervisor";
 import Worker from "./dashboards/Worker";
 import UpdateData from "./dashboards/Supervisor/UpdateData";
+import SideBar from "./dashboards/SideBar";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -20,7 +21,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/supervisor",
-    element: <Supervisor/>,
+    element: <Supervisor />,
   },
   {
     path: "/worker",
@@ -28,14 +29,18 @@ const router = createBrowserRouter([
   },
   {
     path: "/updateData",
-    element:<UpdateData/>,
+    element: <UpdateData />,
+  },
+  {
+    path: "/sidebar",
+    element: <SideBar/>,
   },
 ]);
 function App() {
   return (
     <>
       <RouterProvider router={router} />
- 
+      
     </>
   );
 }

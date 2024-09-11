@@ -1,11 +1,11 @@
 import { useState } from "react";
-
+import axios from "axios";
 export default function Manager() {
   const [data, setData] = useState({
     name: "",
     age: "",
     dob: "",
-    gender: "",
+    gender: "Male",
     fatherName: "",
     motherName: "",
     mobile: "",
@@ -13,49 +13,62 @@ export default function Manager() {
     email: "",
     location: "",
   });
-  // useEffect(() => {
-  //   fetchAllClaims();
-  // }, []);
 
-  // const fetchAllClaims = async () => {
-  //   try {
-  //     const response = await axios.get(`http://localhost:3001/claim/`);
-  //     setClaims(response.data.claims);
-  //   } catch (error) {
-  //     console.error("Error fetching claims:", error);
-  //     setErrorMessage("Error fetching claims. Please try again later.");
-  //   }
-  // };
-  const addFormData = () => {
-    console.log(data);
+  // const [addData, setAddData] = useState([]);
+  const createApi = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/user/createUser",
+        {
+          name: data.name,
+          age: data.age,
+          dob: data.dob,
+          gender: data.gender,
+          fatherName: data.fatherName,
+          motherName: data.motherName,
+          mobile: data.mobile,
+          address: data.address,
+          email: data.email,
+          location: data.location,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      console.log("createApi:", response);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const arr = [
-    {
-      name: "Raj",
-      age: "20",
-      dob: "08/06/2004",
-      gender: "Male",
-      fatherName: "Mani",
-      motherName: "Meena",
-      mobile: "9786768570",
-      address: "694,midlle street ambal.",
-      email: "raj@gmail.com",
-      location: "Thanjavur",
-    },
-    {
-      name: "Abinesh",
-      age: "22",
-      dob: "08/12/2003",
-      gender: "Male",
-      fatherName: "Anbazhagan",
-      motherName: "Selvarani",
-      mobile: "7339434829",
-      address: "North street Thondarampattu",
-      email: "abi802003@gmail.com",
-      location: "Trichy",
-    },
-  ];
+  const handleCreate = (e) => {
+    e.preventDefault();
+    createApi();
+  };
+
+  //   e.preventDefault();
+  //   setAddData([...addData, data]);
+  //   console.log([...addData, data]);
+
+  //   setData({
+  //     name: "",
+  //     age: "",
+  //     dob: "",
+  //     gender: "Male",
+  //     fatherName: "",
+  //     motherName: "",
+  //     mobile: "",
+  //     address: "",
+  //     email: "",
+  //     location: "",
+  //   });
+  // };
+  // const handleDelete = (index) => {
+  //   const updatedData = addData.filter(
+  //     (item, indexItem) => indexItem !== index
+  //   );
+  //   setAddData(updatedData);
+  // };
 
   return (
     <>
@@ -196,48 +209,59 @@ export default function Manager() {
 
           <button
             className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-200"
-            onClick={addFormData}
+            onClick={handleCreate}
           >
             Submit
           </button>
         </div>
       </div>
-      <div className="flex flex-col bg-slate-500 shadow-2xl p-2 w-1/2">
-        <div className="overflow-x-auto  bg-slate-400">
-          <table className="min-w-full  text-left ">
-            <thead className="border-b  border-black ">
-              <tr className="bg-gray-200">
-                <th className="px-4 py-2 ">Name</th>
-                <th className="px-4 py-2 ">Age</th>
-                <th className="px-4 py-2 ">Date of Birth</th>
-                <th className="px-4 py-2 ">Gender</th>
-                <th className="px-4 py-2 ">Father Name</th>
-                <th className="px-4 py-2 ">Mother Name</th>
-                <th className="px-4 py-2 ">Mobile</th>
-                <th className="px-4 py-2 ">Address</th>
-                <th className="px-4 py-2 ">Email</th>
-                <th className="px-4 py-2 ">Location</th>
-              </tr>
-            </thead>
-            <tbody>
-              {arr.map((li, i) => (
-                <tr key={i} className="border-b  border-black">
-                  <td className="px-4 py-2 ">{li.name}</td>
-                  <td className="px-4 py-2 ">{li.age}</td>
-                  <td className="px-4 py-2 ">{li.dob}</td>
-                  <td className="px-4 py-2 ">{li.gender}</td>
-                  <td className="px-4 py-2 ">{li.fatherName}</td>
-                  <td className="px-4 py-2 ">{li.motherName}</td>
-                  <td className="px-4 py-2 ">{li.mobile}</td>
-                  <td className="px-4 py-2 ">{li.address}</td>
-                  <td className="px-4 py-2 ">{li.email}</td>
-                  <td className="px-4 py-2 ">{li.location}</td>
+      {/* {addData.length > 0 && (
+        <div className="flex flex-col bg-slate-500 shadow-2xl p-2 ">
+          <div className="overflow-x-auto bg-slate-400">
+            <table className="min-w-full text-left ">
+              <thead className="border-b border-black ">
+                <tr className="bg-gray-200">
+                  <th className="px-4 py-2 ">Name</th>
+                  <th className="px-4 py-2 ">Age</th>
+                  <th className="px-4 py-2 ">Date of Birth</th>
+                  <th className="px-4 py-2 ">Gender</th>
+                  <th className="px-4 py-2 ">Father Name</th>
+                  <th className="px-4 py-2 ">Mother Name</th>
+                  <th className="px-4 py-2 ">Mobile</th>
+                  <th className="px-4 py-2 ">Address</th>
+                  <th className="px-4 py-2 ">Email</th>
+                  <th className="px-4 py-2 ">Location</th>
+                  <th className="px-4 py-2 ">Action</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {addData.map((li, i) => (
+                  <tr key={i} className="border-b border-black">
+                    <td className="px-4 py-2 ">{li.name}</td>
+                    <td className="px-4 py-2 ">{li.age}</td>
+                    <td className="px-4 py-2 ">{li.dob}</td>
+                    <td className="px-4 py-2 ">{li.gender}</td>
+                    <td className="px-4 py-2 ">{li.fatherName}</td>
+                    <td className="px-4 py-2 ">{li.motherName}</td>
+                    <td className="px-4 py-2 ">{li.mobile}</td>
+                    <td className="px-4 py-2 ">{li.address}</td>
+                    <td className="px-4 py-2 ">{li.email}</td>
+                    <td className="px-4 py-2 ">{li.location}</td>
+                    <td className="px-4 py-2 ">
+                      <button
+                        onClick={() => handleDelete(i)}
+                        className="p-2 bg-red-700"
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
+      )} */}
     </>
   );
 }
