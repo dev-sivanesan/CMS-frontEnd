@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 export default function Manager() {
   const [data, setData] = useState({
@@ -14,7 +14,7 @@ export default function Manager() {
     location: "",
   });
 
-  // const [addData, setAddData] = useState([]);
+  const [addData, setAddData] = useState([]);
   const createApi = async () => {
     try {
       const response = await axios.post(
@@ -36,40 +36,66 @@ export default function Manager() {
         }
       );
       console.log("createApi:", response);
+      fetchData();
     } catch (error) {
       console.log(error);
     }
   };
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:3000/user/getAllUsers",
+        { withCredentials: true }
+      );
+      console.log("createApi:", response.data.message);
+      setAddData(response.data.message);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
 
+  const deleteData = async (id) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:3000/user/deleteUser/${id}`,
+        { withCredentials: true }
+      );
+
+      console.log("deleteApi:", response.data);
+      fetchData();
+    } catch (error) {
+      console.error(
+        "Error deleting user:",
+        error.response ? error.response.data : error.message
+      );
+    }
+  };
+
+  const handleDelete = (id) => {
+    deleteData(id);
+  };
   const handleCreate = (e) => {
     e.preventDefault();
     createApi();
+    clearForm();
   };
-
-  //   e.preventDefault();
-  //   setAddData([...addData, data]);
-  //   console.log([...addData, data]);
-
-  //   setData({
-  //     name: "",
-  //     age: "",
-  //     dob: "",
-  //     gender: "Male",
-  //     fatherName: "",
-  //     motherName: "",
-  //     mobile: "",
-  //     address: "",
-  //     email: "",
-  //     location: "",
-  //   });
-  // };
-  // const handleDelete = (index) => {
-  //   const updatedData = addData.filter(
-  //     (item, indexItem) => indexItem !== index
-  //   );
-  //   setAddData(updatedData);
-  // };
-
+  const clearForm = () => {
+    setData({
+      name: "",
+      age: "",
+      dob: "",
+      gender: "Male",
+      fatherName: "",
+      motherName: "",
+      mobile: "",
+      address: "",
+      email: "",
+      location: "",
+    });
+  };
   return (
     <>
       <div className="flex flex-col items-center py-8 bg-cyan-300 ">
@@ -215,7 +241,7 @@ export default function Manager() {
           </button>
         </div>
       </div>
-      {/* {addData.length > 0 && (
+      {addData.length > 0 && (
         <div className="flex flex-col bg-slate-500 shadow-2xl p-2 ">
           <div className="overflow-x-auto bg-slate-400">
             <table className="min-w-full text-left ">
@@ -249,7 +275,7 @@ export default function Manager() {
                     <td className="px-4 py-2 ">{li.location}</td>
                     <td className="px-4 py-2 ">
                       <button
-                        onClick={() => handleDelete(i)}
+                        onClick={() => handleDelete(li.id)}
                         className="p-2 bg-red-700"
                       >
                         Delete
@@ -261,7 +287,7 @@ export default function Manager() {
             </table>
           </div>
         </div>
-      )} */}
+      )}
     </>
   );
 }

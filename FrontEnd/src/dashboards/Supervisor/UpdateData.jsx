@@ -1,6 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 
 function UpdateData() {
+  const navigate = useNavigate();
+  const { id } = useParams();
   const [data, setData] = useState({
     name: "",
     age: "",
@@ -13,9 +17,42 @@ function UpdateData() {
     email: "",
     location: "",
   });
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/user/getUser/${id}`,
+          { withCredentials: true }
+        );
+        console.log("getdata:", response.data.Message);
+        setData(response.data.Message);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-  const addFormData = () => {
-    console.log("Form data submitted:", data);
+    if (id) {
+      fetchUserData();
+    }
+  }, [id]);
+
+  const UpdateData = async () => {
+    try {
+      const response = await axios.put(
+        `http://localhost:3000/user/updateUser/${id}`,
+        data,
+        { withCredentials: true }
+      );
+      console.log("User updated:", response.data.message);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const addFormData = (e) => {
+    e.preventDefault();
+    UpdateData();
+    navigate("/supervisor");
   };
 
   return (
@@ -27,7 +64,7 @@ function UpdateData() {
             Name
           </label>
           <input
-            id="name"
+            name="name"
             type="text"
             value={data.name}
             className="mt-1 block w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -40,7 +77,7 @@ function UpdateData() {
             Age
           </label>
           <input
-            id="age"
+            name="age"
             type="number"
             value={data.age}
             className="mt-1 block w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -53,7 +90,7 @@ function UpdateData() {
             Date of Birth
           </label>
           <input
-            id="dob"
+            name="dob"
             type="date"
             value={data.dob}
             className="mt-1 block w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -66,7 +103,7 @@ function UpdateData() {
             Gender
           </label>
           <select
-            id="gender"
+            name="gender"
             value={data.gender}
             onChange={(e) => setData({ ...data, gender: e.target.value })}
             className="mt-1 block w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -81,7 +118,7 @@ function UpdateData() {
             Father Name
           </label>
           <input
-            id="fatherName"
+            name="fatherName"
             type="text"
             value={data.fatherName}
             className="mt-1 block w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -94,7 +131,7 @@ function UpdateData() {
             Mother Name
           </label>
           <input
-            id="motherName"
+            name="motherName"
             type="text"
             value={data.motherName}
             className="mt-1 block w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -107,7 +144,7 @@ function UpdateData() {
             Mobile
           </label>
           <input
-            id="mobile"
+            name="mobile"
             type="text"
             value={data.mobile}
             className="mt-1 block w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -120,7 +157,7 @@ function UpdateData() {
             Address
           </label>
           <input
-            id="address"
+            name="address"
             type="text"
             value={data.address}
             className="mt-1 block w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -133,7 +170,7 @@ function UpdateData() {
             Email
           </label>
           <input
-            id="email"
+            name="email"
             type="email"
             value={data.email}
             className="mt-1 block w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -146,7 +183,7 @@ function UpdateData() {
             Location
           </label>
           <input
-            id="location"
+            name="location"
             type="text"
             value={data.location}
             className="mt-1 block w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"

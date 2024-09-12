@@ -1,46 +1,39 @@
+import { useEffect, useState } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 function Supervisor() {
   const navigate = useNavigate();
+  const [addData, setAddData] = useState([]);
 
-  const handleUpdate = () => {
-    navigate("/updateData");
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:3000/user/getAllUsers",
+        { withCredentials: true }
+      );
+      console.log("Fetched Users:", response.data.message);
+      setAddData(response.data.message);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const arr = [
-    {
-      name: "Raj",
-      age: "20",
-      dob: "08/06/2004",
-      gender: "Male",
-      fatherName: "Mani",
-      motherName: "Meena",
-      mobile: "9786768570",
-      address: "694, middle street ambal",
-      email: "raj@gmail.com",
-      location: "Thanjavur",
-    },
-    {
-      name: "Abinesh",
-      age: "22",
-      dob: "08/12/2003",
-      gender: "Male",
-      fatherName: "Anbazhagan",
-      motherName: "Selvarani",
-      mobile: "7339434829",
-      address: "North street Thondarampattu",
-      email: "abi802003@gmail.com",
-      location: "Trichy",
-    },
-  ];
+  const handleUpdate = (id) => {
+    navigate(`/updateData/${id}`);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <div className="w-full flex h-screen">
       <div className="w-52 bg-black"></div>
-      <div className="  p-7  flex flex-col justify-center no-scrollbar bg-slate-600  md:overflow-x-hidden overflow-x-auto shadow-2xl">
-        <table className=" text-left bg-white rounded-xl ">
-          <thead className="bg-slate-300  text-slate-500  font-serif">
-            <tr >
+      <div className="p-7 flex flex-col justify-center no-scrollbar bg-slate-600 md:overflow-x-hidden overflow-x-auto shadow-2xl">
+        <table className="text-left bg-white rounded-xl">
+          <thead className="bg-slate-300 text-slate-500 font-serif">
+            <tr>
               <th className="px-4 py-2">Name</th>
               <th className="px-4 py-2">Age</th>
               <th className="px-4 py-2">Date of Birth</th>
@@ -55,8 +48,8 @@ function Supervisor() {
             </tr>
           </thead>
           <tbody className="font-mono text-slate-400">
-            {arr.map((li, i) => (
-              <tr key={i}>
+            {addData.map((li, i) => (
+              <tr key={i} className="border-b border-black">
                 <td className="px-4 py-2">{li.name}</td>
                 <td className="px-4 py-2">{li.age}</td>
                 <td className="px-4 py-2">{li.dob}</td>
@@ -67,9 +60,10 @@ function Supervisor() {
                 <td className="px-4 py-2">{li.address}</td>
                 <td className="px-4 py-2">{li.email}</td>
                 <td className="px-4 py-2">{li.location}</td>
+
                 <td className="px-4 py-2">
                   <button
-                    onClick={handleUpdate}
+                    onClick={() => handleUpdate(li.id)}
                     className="bg-red-400 rounded-md p-2 font-medium"
                   >
                     Update

@@ -28,7 +28,7 @@ const router = createBrowserRouter([
     element: <Worker />,
   },
   {
-    path: "/updateData",
+    path: "/updateData/:id" ,
     element: <UpdateData />,
   },
   {
