@@ -56,9 +56,9 @@ function UpdateData() {
   };
 
   return (
-    <div className="flex flex-col items-center py-8 bg-cyan-300">
-      <h1 className="text-2xl font-bold mb-6 text-center">Employee Form</h1>
+    <div className="flex flex-col bg-[#D2E0FB] items-center py-8 ">
       <div className="w-full max-w-md space-y-4 p-5 rounded-md bg-white shadow-2xl">
+        <h1 className="text-2xl font-bold mb-6 text-center">Employee Form</h1>
         <div>
           <label htmlFor="name" className="block text-gray-700">
             Name

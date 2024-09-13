@@ -12,7 +12,7 @@ function Worker() {
           { withCredentials: true }
         );
         console.log("createApi:", response.data.message);
-        setAddData(response.data.message); 
+        setAddData(response.data.message);
       } catch (error) {
         console.log(error);
       }
@@ -24,40 +24,46 @@ function Worker() {
   return (
     <>
       {addData.length > 0 && (
-        <div className="flex flex-col bg-slate-500 shadow-2xl p-2 ">
-          <div className="overflow-x-auto bg-slate-400">
-            <table className="min-w-full text-left ">
-              <thead className="border-b border-black ">
-                <tr className="bg-gray-200">
-                  <th className="px-4 py-2 ">Name</th>
-                  <th className="px-4 py-2 ">Age</th>
-                  <th className="px-4 py-2 ">Date of Birth</th>
-                  <th className="px-4 py-2 ">Gender</th>
-                  <th className="px-4 py-2 ">Father Name</th>
-                  <th className="px-4 py-2 ">Mother Name</th>
-                  <th className="px-4 py-2 ">Mobile</th>
-                  <th className="px-4 py-2 ">Address</th>
-                  <th className="px-4 py-2 ">Email</th>
-                  <th className="px-4 py-2 ">Location</th>
-                </tr>
-              </thead>
-              <tbody>
-                {addData.map((li, i) => (
-                  <tr key={i} className="border-b border-black">
-                    <td className="px-4 py-2 ">{li.name}</td>
-                    <td className="px-4 py-2 ">{li.age}</td>
-                    <td className="px-4 py-2 ">{li.dob}</td>
-                    <td className="px-4 py-2 ">{li.gender}</td>
-                    <td className="px-4 py-2 ">{li.fatherName}</td>
-                    <td className="px-4 py-2 ">{li.motherName}</td>
-                    <td className="px-4 py-2 ">{li.mobile}</td>
-                    <td className="px-4 py-2 ">{li.address}</td>
-                    <td className="px-4 py-2 ">{li.email}</td>
-                    <td className="px-4 py-2 ">{li.location}</td>
+        <div className="flex flex-row min-h-screen bg-[#D2E0FB]">
+          <div className="flex flex-col w-full items-center justify-center  overflow-auto shadow-2xl">
+            <div className="overflow-x-auto w-full no-scrollbar">
+              <table className="min-w-full bg-white rounded-lg shadow-md">
+                <thead className="bg-slate-800 text-white font-bold">
+                  <tr>
+                    <th className="px-2 md:px-6 py-3">Name</th>
+                    <th className="px-2 md:px-6 py-3">Age</th>
+                    <th className="px-2 md:px-6 py-3">Date of Birth</th>
+                    <th className="px-2 md:px-6 py-3">Gender</th>
+                    <th className="px-2 md:px-6 py-3">Father Name</th>
+                    <th className="px-2 md:px-6 py-3">Mother Name</th>
+                    <th className="px-2 md:px-6 py-3">Mobile</th>
+                    <th className="px-2 md:px-6 py-3">Address</th>
+                    <th className="px-2 md:px-6 py-3">Email</th>
+                    <th className="px-2 md:px-6 py-3">Location</th>
+                   
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="text-slate-600">
+                  {addData.map((li, i) => (
+                    <tr
+                      key={i}
+                      className="border-t border-slate-300 hover:bg-slate-200 transition-all"
+                    >
+                      <td className="px-2 md:px-6 py-3">{li.name}</td>
+                      <td className="px-2 md:px-6 py-3">{li.age}</td>
+                      <td className="px-2 md:px-6 py-3">{li.dob}</td>
+                      <td className="px-2 md:px-6 py-3">{li.gender}</td>
+                      <td className="px-2 md:px-6 py-3">{li.fatherName}</td>
+                      <td className="px-2 md:px-6 py-3">{li.motherName}</td>
+                      <td className="px-2 md:px-6 py-3">{li.mobile}</td>
+                      <td className="px-2 md:px-6 py-3">{li.address}</td>
+                      <td className="px-2 md:px-6 py-3">{li.email}</td>
+                      <td className="px-2 md:px-6 py-3">{li.location}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       )}
